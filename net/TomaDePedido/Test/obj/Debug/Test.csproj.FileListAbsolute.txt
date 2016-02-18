@@ -9,3 +9,14 @@ C:\Code\Facultad\Ingenieria de Software 2\TomaDePedido_no\Test\bin\Debug\TomaDeP
 C:\Code\Facultad\Ingenieria de Software 2\TomaDePedido_no\Test\bin\Debug\TomaDePedido.pdb
 C:\Code\Facultad\Ingenieria de Software 2\TomaDePedido_no\Test\bin\Debug\Moq.dll
 C:\Code\Facultad\Ingenieria de Software 2\TomaDePedido_no\Test\bin\Debug\Moq.xml
+C:\Code\Facultad\Ingenieria de Software 2\ids2verano2016\net\TomaDePedido\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
+C:\Code\Facultad\Ingenieria de Software 2\ids2verano2016\net\TomaDePedido\Test\obj\Debug\Test.dll
+C:\Code\Facultad\Ingenieria de Software 2\ids2verano2016\net\TomaDePedido\Test\obj\Debug\Test.pdb
+C:\Code\Facultad\Ingenieria de Software 2\ids2verano2016\net\TomaDePedido\Test\bin\Debug\Test.dll
+C:\Code\Facultad\Ingenieria de Software 2\ids2verano2016\net\TomaDePedido\Test\bin\Debug\Test.pdb
+C:\Code\Facultad\Ingenieria de Software 2\ids2verano2016\net\TomaDePedido\Test\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Code\Facultad\Ingenieria de Software 2\ids2verano2016\net\TomaDePedido\Test\bin\Debug\Moq.dll
+C:\Code\Facultad\Ingenieria de Software 2\ids2verano2016\net\TomaDePedido\Test\bin\Debug\TomaDePedido.exe
+C:\Code\Facultad\Ingenieria de Software 2\ids2verano2016\net\TomaDePedido\Test\bin\Debug\TomaDePedido.pdb
+C:\Code\Facultad\Ingenieria de Software 2\ids2verano2016\net\TomaDePedido\Test\bin\Debug\Moq.xml
+C:\Code\Facultad\Ingenieria de Software 2\ids2verano2016\net\TomaDePedido\Test\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
