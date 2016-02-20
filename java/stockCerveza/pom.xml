@@ -6,4 +6,42 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>stockCerveza</artifactId>
+  <repositories>
+		<repository>
+			<id>oss.sonatype.org</id>
+			<name>OSS Sonatype Staging</name>
+			<url>https://oss.sonatype.org/content/groups/staging</url>
+		</repository>
+	</repositories>
+ 
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>eclipselink</artifactId>
+			<version>2.5.0-RC1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.eclipse.persistence</groupId>
+					<artifactId>commonj.sdo</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+	<groupId>junit</groupId>
+	<artifactId>junit</artifactId>
+	<version>4.8.1</version>
+</dependency>
+<dependency>
+	<groupId>org.mockito</groupId>
+	<artifactId>mockito-all</artifactId>
+	<version>1.10.19</version>
+</dependency>
+<dependency>
+	<groupId>org.xerial</groupId>
+	<artifactId>sqlite-jdbc</artifactId>
+	<version>3.8.11.2</version>
+</dependency>
+
+		
+	</dependencies>
 </project>

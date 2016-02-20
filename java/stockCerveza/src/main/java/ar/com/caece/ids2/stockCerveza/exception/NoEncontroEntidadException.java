@@ -5,8 +5,8 @@ public class NoEncontroEntidadException extends Exception {
 	 * 
 	 */
 	private static final long serialVersionUID = 2274778620785668037L;
-	private Class entidadClase;
-	public NoEncontroEntidadException(Class entidadClase){
+	private Class<?> entidadClase;
+	public NoEncontroEntidadException(Class<?> entidadClase){
 		super();
 		this.entidadClase = entidadClase; 
 	} 
