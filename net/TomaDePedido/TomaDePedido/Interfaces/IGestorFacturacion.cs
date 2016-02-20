@@ -14,13 +14,13 @@
         /// Cambia el estado de una mesa a "Abierta"
         /// </summary>
         /// <param name="codigo">Codigo de la Mesa</param>
-        void AbrirMesa(int codigo);
+        void OcuparMesa(int codigo);
 
         /// <summary>
         /// Cambia el estado de una mesa a "Cerrada"
         /// </summary>
         /// <param name="codigo">Codigo de la Mesa</param>
-        void CerrarMesa(int codigo);
+        void LiberarMesa(int codigo);
 
         /// <summary>
         /// Obtiene el Estado de la Mesa a partir de su Codigo

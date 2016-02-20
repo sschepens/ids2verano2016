@@ -4,8 +4,7 @@
 
     public interface IDetallePlato
     {
-        int CodigoDetallePlato { get; }
-        int CodigoPlato { get; }
+        int Cantidad { get; set; }
         Enums.EstadoPedido Estado { get; }
         string Comentario { get; set; }
 

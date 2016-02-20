@@ -10,8 +10,8 @@ namespace TomaDePedido.Models
 
     public class DetalleCerveza : IDetalleCerveza
     {
-        public int CodigoDetalleCerveza { get; }
-        public int CodigoCerveza { get; }
+        public int CodigoDetalleCerveza { get; set; }
+        public int CodigoCerveza { get; set; }
 
         public int Cantidad { get; set; }
 

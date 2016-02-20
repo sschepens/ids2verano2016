@@ -9,14 +9,14 @@
     /// </summary>
     public class GestorFacturacion : IGestorFacturacion
     {
-        public void AbrirMesa(int codigo)
+        public void OcuparMesa(int codigo)
         {
-            throw new NotImplementedException();
+            
         }
 
-        public void CerrarMesa(int codigo)
+        public void LiberarMesa(int codigo)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void EnviarPedido(IPedido pedido)
@@ -34,6 +34,11 @@
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Obtiene los pedidos a partir de un codigo de mesa
+        /// </summary>
+        /// <param name="codigo">Codigo de Mesa</param>
+        /// <returns></returns>
         public List<IPedido> ObtenerPedidos(int codigo)
         {
             throw new NotImplementedException();

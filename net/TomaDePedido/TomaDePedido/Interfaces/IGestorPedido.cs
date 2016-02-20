@@ -1,10 +1,11 @@
 ﻿namespace TomaDePedido.Interfaces
 {
+    using System.Collections.Generic;
     using TomaDePedido.Enums;
 
     public interface IGestorPedido
     {
-        void TomarPedido();
+        void EnviarPedido(IPedido pedido);
 
         /// <summary>
         /// Alertará acerca de la finalización del preparado de un plato
@@ -30,12 +31,16 @@
         /// Cambia el estado de una mesa a "Abierta"
         /// </summary>
         /// <param name="codigo">Codigo de la Mesa</param>
-        void AbrirMesa(int codigo);
+        void OcuparMesa(int codigo);
+
+        List<IMesa> ObtenerMesas();
+
+        void PedirCerveza(IDetalleCerveza detalle);
 
         /// <summary>
         /// Cambia el estado de una mesa a "Cerrada"
         /// </summary>
         /// <param name="codigo">Codigo de la Mesa</param>
-        void CerrarMesa(int codigo);
+        void LiberarMesa(int codigo);
     }
 }

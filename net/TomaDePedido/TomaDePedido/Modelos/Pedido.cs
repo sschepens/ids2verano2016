@@ -7,11 +7,12 @@
 namespace TomaDePedido.Models
 {
     using System.Collections.Generic;
+    using Interfaces;
     using TomaDePedido.Enums;
 
-    public class Pedido
+    public class Pedido : IPedido
     {
-        public int Codigo { get; }
+        private int Codigo { get; set; }
 
         public int CodigoMesa { get; }
 
@@ -29,6 +30,8 @@ namespace TomaDePedido.Models
         {
             this.CodigoMesa = codigoMesa;
             this.Estado = Enums.EstadoPedido.Pendiente;
+            this.Cervezas = new List<DetalleCerveza>();
+            this.Platos = new List<DetallePlato>();
         }
 
         public void AgregarCerveza(int codigoCerveza, int cantidad)
@@ -36,20 +39,19 @@ namespace TomaDePedido.Models
             this.Cervezas.Add(new DetalleCerveza(codigoCerveza, cantidad));
         }
 
-        public void AgregarPlato(int codigoPlato, int cantidad)
+        public void AgregarPlato(int codigoPlato, int cantidad, string comentario)
         {
             this.Platos.Add(new DetallePlato(codigoPlato));
         }
 
-        public void GuardarPedido()
+        public int ObtenerCodigo()
         {
-            //Todo: Enviar informacion del pedido a Control
+            return this.Codigo;
         }
 
-        public List<Pedido> ObtenerPedidos(int codigoMesa)
+        public void AsignarCodigo(int codigo)
         {
-            //Todo: Obtener informacion de los pedidos desde Control
-            return null;
+            this.Codigo = codigo;
         }
     }
 }

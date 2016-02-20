@@ -54,7 +54,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MesaTest.cs" />
+    <Compile Include="Gestores\MesaTest.cs" />
+    <Compile Include="Gestores\PedidoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
