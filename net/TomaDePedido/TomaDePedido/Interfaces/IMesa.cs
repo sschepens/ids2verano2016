@@ -7,8 +7,7 @@ namespace TomaDePedido.Interfaces
 
     public interface IMesa
     {
-        double ObtenerMontoAPagar();
-
+        string Nombre { get; set; }
         int CodigoMesa { get; set; }
         Enums.EstadoMesa Estado { get; set; }
         List<Pedido> Pedidos { get; }

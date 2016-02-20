@@ -3,7 +3,7 @@
     using System;
     using TomaDePedido.Interfaces;
     using TomaDePedido.Enums;
-
+    using System.Collections.Generic;
     /// <summary>
     /// Gestiona la comunicación entre la interfaz de pedidos y los modulos externos de los cuales necesita información
     /// </summary>
@@ -18,6 +18,13 @@
             return Facturacion.ObtenerSaldoMesa(codigo);
         }
 
+        public GestorPedido(IGestorCocina cocina, IGestorFacturacion facturacion, IGestorStock stock)
+        {
+            this.Cocina = cocina;
+            this.Stock = stock;
+            this.Facturacion = facturacion;
+        }
+
         public GestorPedido()
         {
             this.Cocina = new GestorCocina();
@@ -25,25 +32,42 @@
             this.Facturacion = new GestorFacturacion();
         }
         
-        public void TomarPedido()
+        public void EnviarPedido(IPedido pedido)
         {
-            throw new NotImplementedException();
+            this.Facturacion.EnviarPedido(pedido);
         }
 
-        public void AbrirMesa(int codigoMesa)
+        public void PedirCerveza(IDetalleCerveza detalle)
         {
-            this.Facturacion.AbrirMesa(codigoMesa);
+
         }
 
-        public void CerrarMesa(int codigoMesa)
+        #region "Mesas"
+        public void OcuparMesa(int codigoMesa)
         {
-            this.Facturacion.CerrarMesa(codigoMesa);
+            this.Facturacion.OcuparMesa(codigoMesa);
+        }
+
+        public void LiberarMesa(int codigoMesa)
+        {
+            this.Facturacion.LiberarMesa(codigoMesa);
         }
 
         public Enums.EstadoMesa ObtenerEstadoMesa(int codigoMesa)
         {
             var estado = this.Facturacion.ObtenerEstadoMesa(codigoMesa);
             return (Enums.EstadoMesa)estado;
+        }
+
+        public List<IMesa> ObtenerMesas()
+        {
+            return this.Facturacion.ObtenerMesas();
+        }
+        #endregion
+
+        public List<IPedido> ObtenerPedidos(int codigo)
+        {
+            return this.Facturacion.ObtenerPedidos(codigo);
         }
 
         public void Alertar(int codigo)

@@ -6,7 +6,8 @@
         {
             Pendiente = 0,
             EnPreparacion = 1,
-            Terminado = 2
+            Terminado = 2,
+            Cancelado = 3
         }
 
         public enum EstadoMesa

@@ -11,12 +11,14 @@ namespace TomaDePedido.Models
 
     public class DetallePlato : IDetallePlato
     {
-        public int CodigoDetallePlato { get; }
-        public int CodigoPlato { get; }
+        private int CodigoDetallePlato { get; set; }
+        private int CodigoPlato { get; set; }
 
         public Enums.EstadoPedido Estado { get; }
 
         public string Comentario { get; set; }
+
+        public int Cantidad { get; set; }
 
         public DetallePlato() { }
 

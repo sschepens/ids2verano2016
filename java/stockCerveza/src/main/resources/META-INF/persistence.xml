@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="pedidosBE">
+		<class>ar.com.caece.ids2.stockCerveza.model.Cerveza</class>
+		<class>ar.com.caece.ids2.stockCerveza.model.MarcaCerveza</class>
+		<class>ar.com.caece.ids2.stockCerveza.model.Proveedor</class>
+		<class>ar.com.caece.ids2.stockCerveza.model.PresentacionCerveza</class>
+		<class>ar.com.caece.ids2.stockCerveza.model.EstiloCerveza</class>
+		
+		<properties>
+		
+            <property name="hibernate.dialect" value="com.blogspot.thedevside.util.SQLiteDialect"/>
+			<property name="hibernate.hbm2ddl.auto" value="create"/>
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="false"/>
+			
+			<property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlite:MySQLiteDB"/>
+			
+        </properties>
+	</persistence-unit>
+</persistence>

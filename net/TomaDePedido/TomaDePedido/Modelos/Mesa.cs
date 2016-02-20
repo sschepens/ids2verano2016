@@ -14,6 +14,7 @@ namespace TomaDePedido.Models
     {
         public int CodigoMesa { get; set; }
         public Enums.EstadoMesa Estado { get; set; }
+        public string Nombre { get; set; }
 
         public List<Pedido> Pedidos { get; }
 
@@ -25,29 +26,6 @@ namespace TomaDePedido.Models
         {
             this.Estado = estado;
             //Todo enviar update de estado
-        }
-
-        public double ObtenerMontoAPagar()
-        {
-            //TODO: gestionar el ObtenerMenu de "Control"
-            //var menu = ObtenerMenu();
-            var menu = new Menu();
-            var montoAPagar = 0.0;
-
-            foreach (var pedido in this.Pedidos)
-            {
-                foreach (var detalleCerveza in pedido.Cervezas)
-                {
-                    montoAPagar += detalleCerveza.Cantidad * menu.ObtenerCerveza(detalleCerveza.CodigoCerveza).Precio ;
-                }
-
-                foreach (var detallePlato in pedido.Platos)
-                {
-                    montoAPagar += menu.ObtenerPlato(detallePlato.CodigoPlato).Precio;
-                }
-            }
-
-            return montoAPagar;
         }
     }
 }
