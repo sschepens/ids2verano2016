@@ -1,4 +1,4 @@
-package cocina.model;
+package ar.com.caece.ids2.barapp.cocina.model;
 
 public class DetalleCerveza {
 	

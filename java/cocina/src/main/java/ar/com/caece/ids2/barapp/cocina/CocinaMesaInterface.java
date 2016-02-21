@@ -1,6 +1,6 @@
-package cocina;
+package ar.com.caece.ids2.barapp.cocina;
 
-import cocina.model.Pedido;
+import ar.com.caece.ids2.barapp.cocina.model.Pedido;
 
 /**
  * Interface presentada al modulo de toma de pedidos

@@ -1,9 +1,9 @@
-package cocina.impl;
+package ar.com.caece.ids2.barapp.cocina.impl;
 
-import cocina.CocinaMesaInterface;
-import cocina.dao.PedidoDao;
-import cocina.model.Pedido;
-import cocina.util.CocinaEstados;
+import ar.com.caece.ids2.barapp.cocina.CocinaMesaInterface;
+import ar.com.caece.ids2.barapp.cocina.dao.PedidoDao;
+import ar.com.caece.ids2.barapp.cocina.model.Pedido;
+import ar.com.caece.ids2.barapp.cocina.util.CocinaEstados;
 
 public class CocinaMesaImpl implements CocinaMesaInterface {
 

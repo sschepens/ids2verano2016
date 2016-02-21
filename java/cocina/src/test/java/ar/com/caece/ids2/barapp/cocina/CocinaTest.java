@@ -1,4 +1,7 @@
-import static org.junit.Assert.*;
+package ar.com.caece.ids2.barapp.cocina;
+
+
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package cocina.util;
+package ar.com.caece.ids2.barapp.cocina.util;
 
 public class CocinaEstados {
 

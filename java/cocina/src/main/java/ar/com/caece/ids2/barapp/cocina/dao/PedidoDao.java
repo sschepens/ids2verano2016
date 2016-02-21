@@ -1,6 +1,6 @@
-package cocina.dao;
+package ar.com.caece.ids2.barapp.cocina.dao;
 
-import cocina.model.Pedido;
+import ar.com.caece.ids2.barapp.cocina.model.Pedido;
 
 //TODO: configurar hibernate
 public interface PedidoDao {
