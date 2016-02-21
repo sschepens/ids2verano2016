@@ -1,4 +1,10 @@
-﻿namespace TomaDePedido.Gestores
+﻿//-----------------------------------------------------------------------
+// <copyright file="GestorFacturacion.cs" company="CAECE ENTERPRAISSSSS">
+//     Copyright (c) Caece Enterpraisssss. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace TomaDePedido.Gestores
 {
     using System;
     using System.Collections.Generic;
@@ -9,6 +15,18 @@
     /// </summary>
     public class GestorFacturacion : IGestorFacturacion
     {
+        private IGestorComunicacion gestorComunicacion;
+
+        public GestorFacturacion()
+        {
+
+        }
+
+        public GestorFacturacion(IGestorComunicacion gestorComunicacion)
+        {
+            this.gestorComunicacion = gestorComunicacion;
+        }
+
         public void OcuparMesa(int codigo)
         {
             
@@ -26,7 +44,7 @@
 
         public int ObtenerEstadoMesa(int codigo)
         {
-            throw new NotImplementedException();
+            return this.gestorComunicacion.ObtenerEstadoMesa(codigo);
         }
 
         public List<IMesa> ObtenerMesas()

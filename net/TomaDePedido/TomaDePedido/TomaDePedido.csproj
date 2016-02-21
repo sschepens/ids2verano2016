@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gestores\GestorComunicacion.cs" />
+    <Compile Include="Interfaces\IGestorComunicacion.cs" />
     <Compile Include="InterfazPedido.cs">
       <SubType>Form</SubType>
     </Compile>

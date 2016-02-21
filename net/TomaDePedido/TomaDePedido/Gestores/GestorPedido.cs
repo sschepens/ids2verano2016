@@ -1,9 +1,15 @@
-﻿namespace TomaDePedido.Gestores
+﻿//-----------------------------------------------------------------------
+// <copyright file="GestorPedido.cs" company="CAECE ENTERPRAISSSSS">
+//     Copyright (c) Caece Enterpraisssss. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace TomaDePedido.Gestores
 {
-    using System;
     using TomaDePedido.Interfaces;
     using TomaDePedido.Enums;
     using System.Collections.Generic;
+
     /// <summary>
     /// Gestiona la comunicación entre la interfaz de pedidos y los modulos externos de los cuales necesita información
     /// </summary>
@@ -12,6 +18,7 @@
         private IGestorCocina Cocina;
         private IGestorStock Stock;
         private IGestorFacturacion Facturacion;
+        private IGestorComunicacion Comunicacion;
 
         public double ObtenerSaldoMesa(int codigo)
         {
@@ -27,9 +34,10 @@
 
         public GestorPedido()
         {
-            this.Cocina = new GestorCocina();
-            this.Stock = new GestorStock();
-            this.Facturacion = new GestorFacturacion();
+            this.Comunicacion = new GestorComunicacion();
+            this.Cocina = new GestorCocina(this.Comunicacion);
+            this.Stock = new GestorStock(this.Comunicacion);
+            this.Facturacion = new GestorFacturacion(this.Comunicacion);
         }
         
         public void EnviarPedido(IPedido pedido)
