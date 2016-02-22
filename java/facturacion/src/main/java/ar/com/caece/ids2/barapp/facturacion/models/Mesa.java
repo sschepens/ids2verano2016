@@ -1,14 +1,17 @@
 package ar.com.caece.ids2.barapp.facturacion.models;
 
-import ar.com.caece.ids2.barapp.facturacion.exceptions.DuplicateTableException;
+import ar.com.caece.ids2.barapp.facturacion.exceptions.TableAlreadyOccupiedException;
+import ar.com.caece.ids2.barapp.facturacion.exceptions.TableNotOccupiedException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Sebastian Schepens on 15/2/2016.
  */
 public class Mesa {
-    private static final List<Mesa> mesas = Collections.synchronizedList(new ArrayList<>());
 
     private String name;
     private Integer code;
@@ -16,41 +19,11 @@ public class Mesa {
     public enum State {
         OPEN, CLOSED
     }
-    private State state;
+    private State state = State.CLOSED;
 
-    private Mesa(String name) {
+    public Mesa(String name) {
         this.name = name;
         this.pedidos = Collections.synchronizedList(new ArrayList<Pedido>());
-    }
-
-    public static Mesa getMesa(Integer code) {
-        return mesas.get(code);
-    }
-
-    public static List<Mesa> getMesas() {
-        return new ArrayList<>(mesas);
-    }
-
-    public static Mesa createMesa(String name) throws DuplicateTableException {
-        if (name == null || name.equals("")) {
-            throw new IllegalArgumentException("Name must not be null or empty");
-        }
-        Optional<Mesa> m = mesas.stream().filter(mesa1 -> mesa1.getName() == name).findAny();
-        if (m.isPresent()) {
-            throw new DuplicateTableException("Table with name already present");
-        }
-        Mesa mesa = new Mesa(name);
-        mesas.add(mesa);
-        mesa.code = mesas.indexOf(mesa);
-        return mesa;
-    }
-
-    public static void destroyMesa(Integer code) {
-        mesas.remove(code);
-        Optional<Mesa> m = mesas.stream().filter(mesa -> Objects.equals(mesa.getCode(), code)).findFirst();
-        if (m.isPresent()) {
-            mesas.remove(m.get());
-        }
     }
 
     public Integer getCode() {
@@ -77,13 +50,18 @@ public class Mesa {
         return !isOpen();
     }
 
-    public void open() {
+    public void open() throws TableAlreadyOccupiedException {
+        if (state == State.OPEN) {
+            throw new TableAlreadyOccupiedException();
+        }
         state = State.OPEN;
     }
 
-    public List<Cuenta> close() {
+    public void close() throws TableNotOccupiedException {
+        if (state == State.CLOSED) {
+            throw new TableNotOccupiedException("Table is not occupied");
+        }
         state = State.CLOSED;
-        return null;
     }
 
     public List<Pedido> getPedidos() {

@@ -19,4 +19,8 @@ public class DetallePlato {
     public Integer getCantidad() {
         return this.cantidad;
     }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
 }

@@ -18,8 +18,8 @@ public class Pedido {
     }
     private STATE state = STATE.PENDIENTE;
 
-    public Pedido(int mesa) {
-        this.mesaCode = mesa;
+    public Pedido(int mesaCode) {
+        this.mesaCode = mesaCode;
         this.detallePlatos = new ArrayList<>();
         this.detalleBebidas = new ArrayList<>();
     }
