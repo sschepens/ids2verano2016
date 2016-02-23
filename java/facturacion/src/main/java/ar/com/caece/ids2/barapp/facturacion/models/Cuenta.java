@@ -1,7 +1,6 @@
 package ar.com.caece.ids2.barapp.facturacion.models;
 
-import ar.com.caece.ids2.barapp.facturacion.services.MenuService;
-import ar.com.caece.ids2.barapp.facturacion.services.MenuServiceImpl;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,14 +9,16 @@ import java.util.List;
  * Created by Sebastian Schepens on 15/2/2016.
  */
 public class Cuenta {
-    public MenuService menuService = new MenuServiceImpl();
-    List<DetallePlato> detallePlatos = new ArrayList<>();
-    List<DetalleBebida> detalleBebidas = new ArrayList<>();
+    @JsonProperty("Platos")
+    List<DetallePlato> platos = new ArrayList<>();
+    @JsonProperty("Cervezas")
+    List<DetalleCerveza> cervezas = new ArrayList<>();
+    @JsonProperty("Total")
     Long total = 0L;
 
-    public Cuenta(List<DetallePlato> detallePlatos, List<DetalleBebida> detalleBebidas, Long total) {
-        this.detallePlatos = detallePlatos;
-        this.detalleBebidas = detalleBebidas;
+    public Cuenta(List<DetallePlato> platos, List<DetalleCerveza> cervezas, Long total) {
+        this.platos = platos;
+        this.cervezas = cervezas;
         this.total = total;
     }
 
@@ -25,20 +26,20 @@ public class Cuenta {
         return total;
     }
 
-    public List<DetallePlato> getDetallePlatos() {
-        return detallePlatos;
+    public List<DetallePlato> getPlatos() {
+        return platos;
     }
 
-    public List<DetalleBebida> getDetalleBebidas() {
-        return detalleBebidas;
+    public List<DetalleCerveza> getCervezas() {
+        return cervezas;
     }
 
-    public void setDetallePlatos(List<DetallePlato> detallePlatos) {
-        this.detallePlatos = detallePlatos;
+    public void setPlatos(List<DetallePlato> platos) {
+        this.platos = platos;
     }
 
-    public void setDetalleBebidas(List<DetalleBebida> detalleBebidas) {
-        this.detalleBebidas = detalleBebidas;
+    public void setCervezas(List<DetalleCerveza> cervezas) {
+        this.cervezas = cervezas;
     }
 
     public void setTotal(Long total) {

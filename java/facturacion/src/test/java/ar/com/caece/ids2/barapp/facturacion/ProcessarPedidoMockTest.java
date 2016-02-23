@@ -6,7 +6,6 @@ import ar.com.caece.ids2.barapp.facturacion.models.DetallePlato;
 import ar.com.caece.ids2.barapp.facturacion.models.Mesa;
 import ar.com.caece.ids2.barapp.facturacion.models.Pedido;
 import ar.com.caece.ids2.barapp.facturacion.services.*;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,15 +21,6 @@ public class ProcessarPedidoMockTest {
     private MenuService menuService = mock(MenuServiceImpl.class);
     private Facturador facturador = new FacturadorImpl(mesaService, pedidoService, menuService);
 
-    @After
-    public void clean() throws TableNotFoundException {
-        List<Mesa> listMesa = mesaService.getMesas();
-        for (Mesa m : listMesa) {
-            System.out.println(m);
-            mesaService.destroyMesa(m.getCode());
-        }
-    }
-
     @Before
     public void prepare() throws TableNotFoundException {
         reset(mesaService);
@@ -41,28 +31,29 @@ public class ProcessarPedidoMockTest {
     @Test(expected = TableNotOccupiedException.class)
     public void testProcesarPedidoFailsIfTableNotOcuppied() throws Exception {
         Mesa m = mock(Mesa.class);
-        when(m.getState()).thenReturn(Mesa.State.CLOSED);
+        when(m.getEstado()).thenReturn(Mesa.State.LIBRE);
         when(mesaService.getMesa(0)).thenReturn(m);
 
-        Pedido pedido = new Pedido(0);
-        facturador.procesarPedido(0, pedido);
+        Pedido pedido = mock(Pedido.class);
+        when(pedido.getCodigoMesa()).thenReturn(0);
+        facturador.procesarPedido(pedido);
         verify(mesaService).getMesa(0);
-        verify(m).getState();
+        verify(m).getEstado();
     }
 
     @Test()
     public void testProcesarPedidoAddsPedidoToMesa() throws Exception {
         Mesa m = spy(new Mesa("Paulaner"));
-        when(m.getState()).thenReturn(Mesa.State.OPEN);
+        when(m.getEstado()).thenReturn(Mesa.State.OCUPADA);
         when(mesaService.getMesa(0)).thenReturn(m);
 
         DetallePlato detallePlato = new DetallePlato(1, 1);
         Pedido pedido = new Pedido(0);
         pedido.withPlato(detallePlato);
-        pedido.setState(Pedido.STATE.PENDIENTE);
+        pedido.setEstado(Pedido.State.PENDIENTE);
 
         Assert.assertEquals(m.getPedidos().size(), 0);
-        facturador.procesarPedido(0, pedido);
+        facturador.procesarPedido(pedido);
         Assert.assertEquals(m.getPedidos().size(), 1);
         Assert.assertEquals(m.getPedidos().get(0), pedido);
         verify(mesaService).getMesa(0);
@@ -72,33 +63,35 @@ public class ProcessarPedidoMockTest {
     @Test()
     public void testProcesarPedidoModifiesExistantPedido() throws Exception {
         Mesa m = spy(new Mesa("Paulaner"));
-        when(m.getCode()).thenReturn(0);
-        when(m.getState()).thenReturn(Mesa.State.OPEN);
+        when(m.getCodigoMesa()).thenReturn(0);
+        when(m.getEstado()).thenReturn(Mesa.State.OCUPADA);
         when(mesaService.getMesa(0)).thenReturn(m);
 
         Pedido pedido = mock(Pedido.class);
-        when(pedido.getCode()).thenReturn(0);
-        when(pedido.getDetalleBebidas()).thenReturn(new ArrayList<>());
+        when(pedido.getCodigoMesa()).thenReturn(0);
+        when(pedido.getCodigo()).thenReturn(0);
+        when(pedido.getCervezas()).thenReturn(new ArrayList<>());
         List<DetallePlato> list = new ArrayList<>();
         list.add(new DetallePlato(1, 1));
-        when(pedido.getDetallePlatos()).thenReturn(list);
-        when(pedido.getState()).thenReturn(Pedido.STATE.PENDIENTE);
+        when(pedido.getPlatos()).thenReturn(list);
+        when(pedido.getEstado()).thenReturn(Pedido.State.PENDIENTE);
 
-        facturador.procesarPedido(m.getCode(), pedido);
+        facturador.procesarPedido(pedido);
         verify(m, times(1)).addPedido(pedido);
         verify(m, times(0)).removePedido(anyInt());
 
         Pedido pedidoModificado = mock(Pedido.class);
-        when(pedidoModificado.getCode()).thenReturn(0);
-        when(pedidoModificado.getDetalleBebidas()).thenReturn(new ArrayList<>());
+        when(pedidoModificado.getCodigoMesa()).thenReturn(0);
+        when(pedidoModificado.getCodigo()).thenReturn(0);
+        when(pedidoModificado.getCervezas()).thenReturn(new ArrayList<>());
         List<DetallePlato> detalle2 = new ArrayList<>();
         detalle2.add(new DetallePlato(1, 1));
         detalle2.add(new DetallePlato(2, 2));
-        when(pedidoModificado.getDetallePlatos()).thenReturn(detalle2);
-        when(pedidoModificado.getState()).thenReturn(Pedido.STATE.PENDIENTE);
+        when(pedidoModificado.getPlatos()).thenReturn(detalle2);
+        when(pedidoModificado.getEstado()).thenReturn(Pedido.State.PENDIENTE);
 
-        facturador.procesarPedido(m.getCode(), pedidoModificado);
-        verify(m, times(1)).removePedido(pedidoModificado.getCode());
+        facturador.procesarPedido(pedidoModificado);
+        verify(m, times(1)).removePedido(pedidoModificado.getCodigo());
         verify(m, times(1)).removePedido(anyInt());
         verify(m, times(1)).addPedido(pedidoModificado);
     }
@@ -106,32 +99,34 @@ public class ProcessarPedidoMockTest {
     @Test()
     public void testProcesarPedidoRemovesPedidoWhenCanceled() throws Exception {
         Mesa m = spy(new Mesa("Paulaner"));
-        when(m.getCode()).thenReturn(0);
-        when(m.getState()).thenReturn(Mesa.State.OPEN);
+        when(m.getCodigoMesa()).thenReturn(0);
+        when(m.getEstado()).thenReturn(Mesa.State.OCUPADA);
         when(mesaService.getMesa(0)).thenReturn(m);
 
         Pedido pedido = mock(Pedido.class);
-        when(pedido.getCode()).thenReturn(0);
-        when(pedido.getDetalleBebidas()).thenReturn(new ArrayList<>());
+        when(pedido.getCodigoMesa()).thenReturn(0);
+        when(pedido.getCodigo()).thenReturn(0);
+        when(pedido.getCervezas()).thenReturn(new ArrayList<>());
         List<DetallePlato> list = new ArrayList<>();
         list.add(new DetallePlato(1, 1));
-        when(pedido.getDetallePlatos()).thenReturn(list);
-        when(pedido.getState()).thenReturn(Pedido.STATE.PENDIENTE);
+        when(pedido.getPlatos()).thenReturn(list);
+        when(pedido.getEstado()).thenReturn(Pedido.State.PENDIENTE);
 
-        facturador.procesarPedido(m.getCode(), pedido);
+        facturador.procesarPedido(pedido);
         verify(m, times(1)).addPedido(pedido);
         verify(m, times(0)).removePedido(anyInt());
 
         Pedido pedidoModificado = mock(Pedido.class);
-        when(pedidoModificado.getCode()).thenReturn(0);
-        when(pedidoModificado.getDetalleBebidas()).thenReturn(new ArrayList<>());
+        when(pedidoModificado.getCodigoMesa()).thenReturn(0);
+        when(pedidoModificado.getCodigo()).thenReturn(0);
+        when(pedidoModificado.getCervezas()).thenReturn(new ArrayList<>());
         List<DetallePlato> detalle2 = new ArrayList<>();
         detalle2.add(new DetallePlato(1, 1));
-        when(pedidoModificado.getDetallePlatos()).thenReturn(detalle2);
-        when(pedidoModificado.getState()).thenReturn(Pedido.STATE.CANCELADO);
+        when(pedidoModificado.getPlatos()).thenReturn(detalle2);
+        when(pedidoModificado.getEstado()).thenReturn(Pedido.State.CANCELADO);
 
-        facturador.procesarPedido(m.getCode(), pedidoModificado);
-        verify(m, times(1)).removePedido(pedidoModificado.getCode());
+        facturador.procesarPedido(pedidoModificado);
+        verify(m, times(1)).removePedido(pedidoModificado.getCodigo());
         verify(m, times(1)).addPedido(pedido);
         verify(m, never()).addPedido(pedidoModificado);
     }

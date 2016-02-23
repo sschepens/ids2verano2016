@@ -15,13 +15,12 @@ public interface Facturador {
     /**
      * Agrega, modifica o quita un pedido de una mesa de acuerdo al estado del pedido
      *
-     * @param codigoMesa codigo identificador de la mesa
-     * @param pedido el pedido que debe ser procesado para la mesa
+     * @param pedido el pedido que debe ser procesado
      *
      * @throws TableNotFoundException
      * @throws IllegalArgumentException
      */
-    public void procesarPedido(Integer codigoMesa, Pedido pedido) throws TableNotFoundException, TableNotOccupiedException, IllegalArgumentException;  //listo
+    public void procesarPedido(Pedido pedido) throws TableNotFoundException, TableNotOccupiedException, IllegalArgumentException;  //listo
 
     /**
      * Devuelve una {@link Cuenta} para la mesa data
@@ -97,6 +96,13 @@ public interface Facturador {
      * @throws TableNotFoundException
      */
     public List<Pedido> obtenerPedidos(Integer codigoMesa) throws TableNotFoundException;//tested
+
+    /**
+     * Devuelve el listado de mesas existentes en el sistema.
+     *
+     * @return {@link List} de las {@link Mesa}
+     */
+    public Mesa obtenerMesa(Integer codigoMesa) throws TableNotFoundException;
 
     /**
      * Devuelve el listado de mesas existentes en el sistema.

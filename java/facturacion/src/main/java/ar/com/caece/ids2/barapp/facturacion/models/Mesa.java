@@ -2,66 +2,69 @@ package ar.com.caece.ids2.barapp.facturacion.models;
 
 import ar.com.caece.ids2.barapp.facturacion.exceptions.TableAlreadyOccupiedException;
 import ar.com.caece.ids2.barapp.facturacion.exceptions.TableNotOccupiedException;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by Sebastian Schepens on 15/2/2016.
  */
 public class Mesa {
-
-    private String name;
-    private Integer code;
+    @JsonProperty("Nombre")
+    private String nombre;
+    @JsonProperty("CodigoMesa")
+    private Integer codigoMesa;
+    @JsonProperty("Estado")
+    private State estado = State.LIBRE;
+    @JsonProperty("Pedidos")
     private List<Pedido> pedidos;
-    public enum State {
-        OPEN, CLOSED
-    }
-    private State state = State.CLOSED;
 
-    public Mesa(String name) {
-        this.name = name;
-        this.pedidos = Collections.synchronizedList(new ArrayList<Pedido>());
+    public Mesa(String nombre) {
+        this.nombre = nombre;
+        this.pedidos = Collections.synchronizedList(new ArrayList<>());
     }
 
-    public Integer getCode() {
-        return code;
+    public Integer getCodigoMesa() {
+        return codigoMesa;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setCodigoMesa(Integer codigoMesa) {
+        this.codigoMesa = codigoMesa;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
+    @JsonIgnore
     public boolean isOpen() {
-        return state == State.OPEN;
+        return estado == State.OCUPADA;
     }
 
+    @JsonIgnore
     public boolean isClosed() {
         return !isOpen();
     }
 
     public void open() throws TableAlreadyOccupiedException {
-        if (state == State.OPEN) {
+        if (estado == State.OCUPADA) {
             throw new TableAlreadyOccupiedException();
         }
-        state = State.OPEN;
+        estado = State.OCUPADA;
     }
 
     public void close() throws TableNotOccupiedException {
-        if (state == State.CLOSED) {
+        if (estado == State.LIBRE) {
             throw new TableNotOccupiedException("Table is not occupied");
         }
-        state = State.CLOSED;
+        estado = State.LIBRE;
     }
 
     public List<Pedido> getPedidos() {
@@ -73,7 +76,7 @@ public class Mesa {
     }
 
     public void removePedido(Integer pedido) {
-        Optional<Pedido> p = pedidos.stream().filter(ped -> ped.getCode() == pedido).findFirst();
+        Optional<Pedido> p = pedidos.stream().filter(ped -> ped.getCodigo() == pedido).findFirst();
         if (p.isPresent()) {
             pedidos.remove(p.get());
         }
@@ -83,7 +86,24 @@ public class Mesa {
         pedidos.remove(p);
     }
 
-    public State getState() {
-        return state;
+    public State getEstado() {
+        return estado;
+    }
+
+    public enum State {
+        LIBRE,
+        OCUPADA;
+
+        private static List<State> list = Arrays.asList(State.values());
+
+        @JsonCreator
+        public static State forValue(Integer value) {
+            return list.get(value);
+        }
+
+        @JsonValue
+        public Integer toValue() {
+            return list.indexOf(this);
+        }
     }
 }

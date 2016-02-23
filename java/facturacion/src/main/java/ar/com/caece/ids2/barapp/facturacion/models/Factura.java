@@ -1,17 +1,23 @@
 package ar.com.caece.ids2.barapp.facturacion.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Sebastian Schepens on 15/2/2016.
  */
 public class Factura {
-    Map<Integer, DetallePlato> detallePlatos = new HashMap<>();
-    Map<Integer, DetalleBebida> detalleBebida = new HashMap<>();
+    @JsonProperty("Platos")
+    Map<Integer, DetallePlato> platos = new HashMap<>();
+    @JsonProperty("Cervezas")
+    Map<Integer, DetalleCerveza> cervezas = new HashMap<>();
+    @JsonProperty("Propina")
     Long tip = 0L;
+    @JsonProperty("Total")
     Long total = 0L;
+    @JsonProperty("MedioDePago")
     MedioDePago medioDePago;
 
     public Factura(MedioDePago medioDePago) {
@@ -35,20 +41,20 @@ public class Factura {
     }
 
     public void addPlato(DetallePlato detallePlato) {
-        DetallePlato d = this.detallePlatos.get(detallePlato.getCode());
+        DetallePlato d = this.platos.get(detallePlato.getCodigoPlato());
         if (d != null) {
             d.setCantidad(d.getCantidad() + detallePlato.getCantidad());
         } else {
-            this.detallePlatos.put(detallePlato.getCode(), detallePlato);
+            this.platos.put(detallePlato.getCodigoPlato(), detallePlato);
         }
     }
 
-    public void addBebida(DetalleBebida detalleBebida) {
-        DetalleBebida d = this.detalleBebida.get(detalleBebida.getCode());
+    public void addBebida(DetalleCerveza detalleCerveza) {
+        DetalleCerveza d = this.cervezas.get(detalleCerveza.getCodigoCerveza());
         if (d != null) {
-            d.setCantidad(d.getCantidad() + detalleBebida.getCantidad());
+            d.setCantidad(d.getCantidad() + detalleCerveza.getCantidad());
         } else {
-            this.detalleBebida.put(detalleBebida.getCode(), detalleBebida);
+            this.cervezas.put(detalleCerveza.getCodigoCerveza(), detalleCerveza);
         }
     }
 }

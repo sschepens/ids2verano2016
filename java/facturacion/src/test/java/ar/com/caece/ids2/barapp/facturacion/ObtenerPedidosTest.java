@@ -29,26 +29,26 @@ public class ObtenerPedidosTest {
     @Test
     public void obtenerPedido() throws TableNotFoundException {
         Mesa m = mock(Mesa.class);
-        when(m.getCode()).thenReturn(0);
+        when(m.getCodigoMesa()).thenReturn(0);
         List<Pedido> pedidos = new ArrayList<>();
-        pedidos.add(new Pedido(m.getCode()));
+        pedidos.add(new Pedido(m.getCodigoMesa()));
         when(m.getPedidos()).thenReturn(pedidos);
 
-        when(mesaService.getMesa(m.getCode())).thenReturn(m);
+        when(mesaService.getMesa(m.getCodigoMesa())).thenReturn(m);
 
-        List<Pedido> pedidoList = facturador.obtenerPedidos(m.getCode());
+        List<Pedido> pedidoList = facturador.obtenerPedidos(m.getCodigoMesa());
         assertEquals(pedidoList, pedidos);
-        verify(mesaService, times(1)).getMesa(m.getCode());
+        verify(mesaService, times(1)).getMesa(m.getCodigoMesa());
         verify(m, times(1)).getPedidos();
     }
 
     @Test(expected = TableNotFoundException.class)
     public void obtenerPedidoMesaNotFound() throws TableNotFoundException {
         Mesa m = mock(Mesa.class);
-        when(m.getCode()).thenReturn(0);
+        when(m.getCodigoMesa()).thenReturn(0);
 
-        when(mesaService.getMesa(m.getCode())).thenThrow(TableNotFoundException.class);
+        when(mesaService.getMesa(m.getCodigoMesa())).thenThrow(TableNotFoundException.class);
 
-        facturador.obtenerPedidos(m.getCode());
+        facturador.obtenerPedidos(m.getCodigoMesa());
     }
 }

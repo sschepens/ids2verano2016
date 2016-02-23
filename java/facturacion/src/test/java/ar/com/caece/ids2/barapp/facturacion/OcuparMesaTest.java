@@ -25,33 +25,33 @@ public class OcuparMesaTest {
 	@Test
 	public void ocupaMesaClose() throws TableNotFoundException, TableAlreadyOccupiedException {
 		Mesa m = mock(Mesa.class);
-		when(m.getCode()).thenReturn(0);
+		when(m.getCodigoMesa()).thenReturn(0);
 
-		when(mesaService.getMesa(m.getCode())).thenReturn(m);
+		when(mesaService.getMesa(m.getCodigoMesa())).thenReturn(m);
 
-		facturador.ocuparMesa(m.getCode());
-		verify(mesaService, times(1)).getMesa(m.getCode());
+		facturador.ocuparMesa(m.getCodigoMesa());
+		verify(mesaService, times(1)).getMesa(m.getCodigoMesa());
 		verify(m, times(1)).open();
 	}
 
 	@Test(expected = TableNotFoundException.class)
 	public void ocupaMesaNotFound() throws TableNotFoundException, TableAlreadyOccupiedException {
 		Mesa m = mock(Mesa.class);
-		when(m.getCode()).thenReturn(0);
+		when(m.getCodigoMesa()).thenReturn(0);
 
-		when(mesaService.getMesa(m.getCode())).thenThrow(TableNotFoundException.class);
+		when(mesaService.getMesa(m.getCodigoMesa())).thenThrow(TableNotFoundException.class);
 
-		facturador.ocuparMesa(m.getCode());
+		facturador.ocuparMesa(m.getCodigoMesa());
 	}
 
 	@Test(expected = TableAlreadyOccupiedException.class)
 	public void ocupaMesaAlreadyOpen() throws TableNotFoundException, TableAlreadyOccupiedException {
 		Mesa m = mock(Mesa.class);
-		when(m.getCode()).thenReturn(0);
+		when(m.getCodigoMesa()).thenReturn(0);
 		doThrow(TableAlreadyOccupiedException.class).when(m).open();
 
-		when(mesaService.getMesa(m.getCode())).thenReturn(m);
+		when(mesaService.getMesa(m.getCodigoMesa())).thenReturn(m);
 
-		facturador.ocuparMesa(m.getCode());
+		facturador.ocuparMesa(m.getCodigoMesa());
 	}
 }

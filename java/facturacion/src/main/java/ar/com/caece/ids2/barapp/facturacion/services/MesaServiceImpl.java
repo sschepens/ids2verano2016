@@ -17,13 +17,13 @@ public class MesaServiceImpl implements MesaService {
 		if (name == null || name.equals("")) {
 			throw new IllegalArgumentException("Name must not be null or empty");
 		}
-		Optional<Mesa> m = mesas.values().stream().filter(mesa1 -> Objects.equals(mesa1.getName(), name)).findAny();
+		Optional<Mesa> m = mesas.values().stream().filter(mesa1 -> Objects.equals(mesa1.getNombre(), name)).findAny();
 		if (m.isPresent()) {
 			throw new DuplicateTableException("Table with name already present");
 		}
 		Mesa mesa = new Mesa(name);
-		mesa.setCode(getNextCode());
-		mesas.put(mesa.getCode(), mesa);
+		mesa.setCodigoMesa(getNextCode());
+		mesas.put(mesa.getCodigoMesa(), mesa);
 		return mesa;
 	}
 

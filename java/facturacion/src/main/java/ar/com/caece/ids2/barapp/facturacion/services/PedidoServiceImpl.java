@@ -3,7 +3,7 @@ package ar.com.caece.ids2.barapp.facturacion.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.com.caece.ids2.barapp.facturacion.models.DetalleBebida;
+import ar.com.caece.ids2.barapp.facturacion.models.DetalleCerveza;
 import ar.com.caece.ids2.barapp.facturacion.models.DetallePlato;
 import ar.com.caece.ids2.barapp.facturacion.models.Pedido;
 
@@ -12,19 +12,19 @@ public class PedidoServiceImpl implements PedidoService {
 	private MenuService menuService = new MenuServiceImpl();
 	
 	private List<DetallePlato> detallePlatos = new ArrayList<>();
-	private List<DetalleBebida> detalleBebidas = new ArrayList<>();
+	private List<DetalleCerveza> detalleCervezas = new ArrayList<>();
 	private Long total = 0L;
 
 	@Override
 	public Long getCuenta(List<Pedido> pedidos) {
 		for (Pedido p : pedidos) {
-			for (DetallePlato detallePlato : p.getDetallePlatos()) {
+			for (DetallePlato detallePlato : p.getPlatos()) {
 				this.detallePlatos.add(detallePlato);
-				this.total += (menuService.obtenerValorPlato(detallePlato.getCode()) * detallePlato.getCantidad());
+				this.total += (menuService.obtenerValorPlato(detallePlato.getCodigoPlato()) * detallePlato.getCantidad());
 			}
-			for (DetalleBebida detalleBebida : p.getDetalleBebidas()) {
-				this.detalleBebidas.add(detalleBebida);
-				this.total += (menuService.obtenerValorBebida(detalleBebida.getCode()) * detalleBebida.getCantidad());
+			for (DetalleCerveza detalleCerveza : p.getCervezas()) {
+				this.detalleCervezas.add(detalleCerveza);
+				this.total += (menuService.obtenerValorBebida(detalleCerveza.getCodigoCerveza()) * detalleCerveza.getCantidad());
 			}
 		}
 		return total;
@@ -40,9 +40,8 @@ public class PedidoServiceImpl implements PedidoService {
 		return detallePlatos;
 	}
 
-	@Override
-	public List<DetalleBebida> getDetalleBebidas() {
-		return detalleBebidas;
+	public List<DetalleCerveza> getDetalleCervezas() {
+		return detalleCervezas;
 	}
 
 }

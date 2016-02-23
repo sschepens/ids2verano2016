@@ -2,7 +2,7 @@ package ar.com.caece.ids2.barapp.facturacion.services;
 
 import java.util.List;
 
-import ar.com.caece.ids2.barapp.facturacion.models.DetalleBebida;
+import ar.com.caece.ids2.barapp.facturacion.models.DetalleCerveza;
 import ar.com.caece.ids2.barapp.facturacion.models.DetallePlato;
 import ar.com.caece.ids2.barapp.facturacion.models.Pedido;
 
@@ -14,6 +14,6 @@ public interface PedidoService {
 
     public List<DetallePlato> getDetallePlatos();
 
-    public List<DetalleBebida> getDetalleBebidas();
+    public List<DetalleCerveza> getDetalleCervezas();
 	
 }

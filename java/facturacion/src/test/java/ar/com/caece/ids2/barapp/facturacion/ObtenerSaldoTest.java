@@ -9,11 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.mockito.Mockito.*;
 
-public class ObetnerSaldoTest {
+public class ObtenerSaldoTest {
     private MesaService mesaService = mock(MesaServiceImpl.class);
     private PedidoService pedidoService = mock(PedidoServiceImpl.class);
     private MenuService menuService = mock(MenuServiceImpl.class);
@@ -31,15 +30,15 @@ public class ObetnerSaldoTest {
     @Test()
     public void testCuentaMesa() throws Exception {
         Mesa m = mock(Mesa.class);
-        when(m.getCode()).thenReturn(0);
+        when(m.getCodigoMesa()).thenReturn(0);
         when(m.getPedidos()).thenReturn(new ArrayList<Pedido>());
         when(m.isClosed()).thenReturn(false);
 
-        when(mesaService.getMesa(m.getCode())).thenReturn(m);
+        when(mesaService.getMesa(m.getCodigoMesa())).thenReturn(m);
 
-        Cuenta cuenta = facturador.cuentaMesa(m.getCode());
+        Cuenta cuenta = facturador.cuentaMesa(m.getCodigoMesa());
         Assert.assertNotNull(cuenta);
-        verify(mesaService, times(1)).getMesa(m.getCode());
+        verify(mesaService, times(1)).getMesa(m.getCodigoMesa());
         verify(m, times(1)).isClosed();
         verify(m, times(1)).getPedidos();
     }
@@ -47,40 +46,40 @@ public class ObetnerSaldoTest {
     @Test(expected = TableNotOccupiedException.class)
     public void testObtenerSaldoFailsOnClosedTable() throws Exception {
         Mesa m = mock(Mesa.class);
-        when(m.getCode()).thenReturn(0);
+        when(m.getCodigoMesa()).thenReturn(0);
 
         doThrow(TableNotOccupiedException.class).when(facturador).cuentaMesa(0);
 
-        facturador.obtenerSaldo(m.getCode());
+        facturador.obtenerSaldo(m.getCodigoMesa());
     }
 
     @Test(expected = TableNotFoundException.class)
     public void testObtenerSaldoFailsOnInexistantTable() throws Exception {
         Mesa m = mock(Mesa.class);
-        when(m.getCode()).thenReturn(0);
+        when(m.getCodigoMesa()).thenReturn(0);
 
         doThrow(TableNotFoundException.class).when(facturador).cuentaMesa(0);
 
-        facturador.obtenerSaldo(m.getCode());
+        facturador.obtenerSaldo(m.getCodigoMesa());
     }
 
     @Test()
     public void testCuentaReturnsPedidosAndTotal() throws Exception {
         Mesa m = mock(Mesa.class);
-        when(m.getCode()).thenReturn(0);
+        when(m.getCodigoMesa()).thenReturn(0);
         when(m.isClosed()).thenReturn(false);
         when(m.getPedidos()).thenReturn(new ArrayList<Pedido>());
 
-        when(mesaService.getMesa(m.getCode())).thenReturn(m);
+        when(mesaService.getMesa(m.getCodigoMesa())).thenReturn(m);
 
         Cuenta cuenta = mock(Cuenta.class);
         when(cuenta.getTotal()).thenReturn(100L);
 
         doReturn(cuenta).when(facturador).cuentaMesa(0);
 
-        Long saldo = facturador.obtenerSaldo(m.getCode());
+        Long saldo = facturador.obtenerSaldo(m.getCodigoMesa());
         Assert.assertEquals(saldo.longValue(), 100L);
-        verify(facturador, times(1)).cuentaMesa(m.getCode());
+        verify(facturador, times(1)).cuentaMesa(m.getCodigoMesa());
         verify(cuenta, times(1)).getTotal();
     }
 }

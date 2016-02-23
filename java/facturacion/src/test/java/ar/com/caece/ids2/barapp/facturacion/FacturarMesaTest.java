@@ -26,8 +26,8 @@ public class FacturarMesaTest {
 	public void setUpFacturador() throws IllegalArgumentException, DuplicateTableException {
 		Mesa paulaner = facturador.crearMesa("Paulaner");
 
-		Pedido pedido = new Pedido(paulaner.getCode());
-		pedido.setState(Pedido.STATE.PENDIENTE);
+		Pedido pedido = new Pedido(paulaner.getCodigoMesa());
+		pedido.setEstado(Pedido.State.PENDIENTE);
 		paulaner.addPedido(pedido);
 	}
 
